@@ -131,6 +131,33 @@ def create_documents_table(conn: psycopg.Connection):
             """
     _create_table(conn, query, "documents")
 
+def create_federal_register_docs_table(conn: psycopg.Connection):
+    query = """
+                    CREATE TABLE federal_register_documents (
+                    document_number VARCHAR(50) NOT NULL PRIMARY KEY,
+                    document_id VARCHAR(50),
+                    document_title TEXT,
+                    document_type VARCHAR(50),
+                    abstract TEXT,
+                    publication_date DATE,
+                    effective_on DATE,
+                    docket_ids TEXT[],
+                    agency_id VARCHAR(20),
+                    agency_names TEXT[],
+                    topics TEXT[],
+                    significant BOOLEAN,
+                    regulation_id_numbers TEXT[],
+                    html_url VARCHAR(2000),
+                    pdf_url VARCHAR(2000),
+                    json_url VARCHAR(2000),
+                    start_page INTEGER,
+                    title VARCHAR(50),
+                    cfrpart VARCHAR(50),
+                    end_page INTEGER
+                );
+            """
+    _create_table(conn, query, "federal_register_documents")
+
 
 def main():
     load_dotenv()
@@ -155,6 +182,7 @@ def main():
     create_dockets_table(conn)
     create_documents_table(conn)
     create_comments_table(conn)
+    create_federal_register_docs_table(conn)
 
     conn.close()
 
