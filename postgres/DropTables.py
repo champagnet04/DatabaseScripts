@@ -41,7 +41,7 @@ def drop_dockets_table(conn: psycopg.Connection):
 
 
 def drop_documents_table(conn: psycopg.Connection):
-    _drop_table(conn, "documents")
+    _drop_table(conn, "documentsWithFRDoc")
 
 def drop_fed_reg_docs_table(conn: psycopg.Connection):
     _drop_table(conn, "federal_register_documents")

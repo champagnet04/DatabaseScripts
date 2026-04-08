@@ -84,7 +84,7 @@ def create_dockets_table(conn: psycopg.Connection):
 
 def create_documents_table(conn: psycopg.Connection):
     query = """
-                CREATE TABLE documents (
+                CREATE TABLE documentsWithFRDoc (
                     document_id VARCHAR(50) NOT NULL PRIMARY KEY,
                     document_api_link VARCHAR(2000) NOT NULL UNIQUE,
                     address1 VARCHAR(200),
@@ -126,10 +126,15 @@ def create_documents_table(conn: psycopg.Connection):
                     document_title VARCHAR(500),
                     topics VARCHAR(250)[],
                     is_withdrawn BOOLEAN DEFAULT FALSE,
-                    postal_code VARCHAR(10)
+                    postal_code VARCHAR(10),
+                    frdocnum VARCHAR(50),
+                    attachments_self_link VARCHAR(2000),
+                    attachments_related_link VARCHAR(2000),
+                    file_formats JSONB,
+                    display_properties JSONB
                 );  
             """
-    _create_table(conn, query, "documents")
+    _create_table(conn, query, "documentsWithFRDoc")
 
 def create_federal_register_docs_table(conn: psycopg.Connection):
     query = """
